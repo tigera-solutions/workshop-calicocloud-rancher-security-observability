@@ -6,11 +6,11 @@ If you're looking for general docs for Calico, we recommend you start [here](htt
 
 ## Prerequisites
 
-Ensure the make, jq, terraform are installed and you have a Cloud account with appropriate permissions.
+Ensure make, jq, and terraform are installed and you have a Cloud account with appropriate permissions.
 
 ## Setup
 
-Deploy the Rancher management server using the [quickstart](https://github.com/rancher/quickstart) for your infrastructure provider of choice.
+Deploy the Rancher management server using the [Rancher Quickstart](https://github.com/rancher/quickstart) for your infrastructure provider of choice.
 
 Deploy an RKE cluster to your infrastructure providers network.
 
