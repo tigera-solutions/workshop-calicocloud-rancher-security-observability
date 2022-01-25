@@ -1,0 +1,11 @@
+kind: GlobalNetworkSet
+apiVersion: projectcalico.org/v3
+metadata:
+  name: ubuntu-apt-repos
+  labels:
+    apt-repo: ubuntu
+spec:
+  nets: []
+  allowedEgressDomains:
+    - archive.ubuntu.com
+    - security.ubuntu.com

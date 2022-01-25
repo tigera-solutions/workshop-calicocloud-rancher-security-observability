@@ -1,0 +1,37 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: application-team.zone-restricted
+  namespace: hipstershop
+spec:
+  tier: application-team
+  order: 30
+  selector: zone == "restricted"
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      source:
+        selector: zone == "trusted"
+      destination: {}
+    - action: Allow
+      source:
+        selector: zone == "restricted"
+      destination: {}
+    - action: Deny
+      source: {}
+      destination: {}
+  egress:
+    - action: Allow
+      protocol: UDP
+      source: {}
+      destination:
+        namespaceSelector: operations == "cluster-dns"
+        ports:
+          - '53'
+          - '5353'
+    - action: Deny
+      source: {}
+      destination: {}
+  types:
+    - Ingress
+    - Egress

@@ -1,0 +1,32 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: platform-team.allow-cluster-dns
+spec:
+  tier: platform-team
+  order: 5
+  selector: ''
+  namespaceSelector: operations == "cluster-dns"
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: all()
+      destination:
+        ports:
+          - '53'
+          - '5353'
+    - action: Allow
+      protocol: UDP
+      source:
+        selector: all()
+      destination:
+        ports:
+          - '53'
+          - '5353'
+  doNotTrack: false
+  applyOnForward: false
+  preDNAT: false
+  types:
+    - Ingress

@@ -1,0 +1,37 @@
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalAlertTemplate
+metadata:
+  name: network.restricted-zone-violation
+spec:
+  description: "Alerts when pods with a specific label (zone=restricted) accessed by unsanctioned workloads within the cluster"
+  summary: "[flows] [lateral movement] ${source_namespace}/${source_name_aggr} has accessed pod with label zone=restricted"
+  severity: 100
+  period: 5m
+  lookback: 5m
+  dataSet: flows
+  query: '"dest_labels.labels"="zone=restricted" AND "source_labels.labels"!="zone=trusted" AND proto=tcp AND (action=allow OR action=deny) AND reporter=dst'
+  aggregateBy: [source_namespace, source_name_aggr]
+  field: num_flows
+  metric: sum
+  condition: gt
+  threshold: 0
+
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalAlert
+metadata:
+  name: network.restricted-zone-violation
+spec:
+  description: "Alerts when pods with a specific label (zone=restricted) accessed by unsanctioned workloads within the cluster"
+  summary: "[flows] [lateral movement] ${source_namespace}/${source_name_aggr} has accessed pod with label zone=restricted"
+  severity: 100
+  period: 1m
+  lookback: 1m
+  dataSet: flows
+  query: '"dest_labels.labels"="zone=restricted" AND "source_labels.labels"!="zone=trusted" AND proto=tcp AND (action=allow OR action=deny) AND reporter=dst'
+  aggregateBy: [source_namespace, source_name_aggr]
+  field: num_flows
+  metric: sum
+  condition: gt
+  threshold: 0

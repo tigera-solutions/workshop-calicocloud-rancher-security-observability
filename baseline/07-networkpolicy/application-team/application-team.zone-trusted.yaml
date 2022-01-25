@@ -1,0 +1,50 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: application-team.zone-trusted
+  namespace: hipstershop
+spec:
+  tier: application-team
+  order: 20
+  selector: zone == "trusted"
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      source:
+        selector: zone == "dmz"
+      destination: {}
+    - action: Allow
+      source:
+        selector: zone == "trusted"
+      destination: {}
+    - action: Deny
+      source: {}
+      destination: {}
+  egress:
+    - action: Allow
+      source: {}
+      destination:
+        selector: cloud == "metadata-service"
+        namespaceSelector: global()
+    - action: Allow
+      source: {}
+      destination:
+        selector: zone == "trusted"
+    - action: Allow
+      source: {}
+      destination:
+        selector: zone == "restricted"
+    - action: Allow
+      protocol: UDP
+      source: {}
+      destination:
+        namespaceSelector: operations == "cluster-dns"
+        ports:
+          - '53'
+          - '5353'
+    - action: Deny
+      source: {}
+      destination: {}
+  types:
+    - Ingress
+    - Egress

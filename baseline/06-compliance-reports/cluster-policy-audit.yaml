@@ -1,0 +1,8 @@
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalReport
+metadata:
+  name: daily-cluster-policy-audit-report
+spec:
+  reportType: policy-audit
+  schedule: */10 * * * *

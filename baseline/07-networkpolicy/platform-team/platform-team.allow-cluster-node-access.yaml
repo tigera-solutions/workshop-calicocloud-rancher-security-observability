@@ -1,0 +1,26 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: platform-team.allow-cluster-node-access
+spec:
+  tier: platform-team
+  order: 15
+  selector: ''
+  namespaceSelector: ''
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      source: {}
+      destination:
+        selector: aws == "metadata-service"
+  egress:
+    - action: Allow
+      source: {}
+      destination:
+        selector: aws == "metadata-service"
+  doNotTrack: false
+  applyOnForward: false
+  preDNAT: false
+  types:
+    - Ingress
+    - Egress
