@@ -2,10 +2,10 @@
 apiVersion: projectcalico.org/v3
 kind: GlobalReport
 metadata:
-  name: daily-cluster-cis-benchmark-report
+  name: cluster-cis-benchmark-report
 spec:
   reportType: cis-benchmark
-  schedule: */10 * * * *
+  schedule: '*/10 * * * *'
   cis:
     highThreshold: 100
     medThreshold: 50
