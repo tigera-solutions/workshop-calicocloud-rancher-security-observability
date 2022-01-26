@@ -2,7 +2,7 @@
 
 This content was built for free training workshops. 
 
-If you're looking for general docs for Calico, we recommend you start [here](https://docs.tigera.io/)
+If you're looking for general docs for Calico, we recommend you start [here](https://www.tigera.io/calico-documentation/)
 
 ## Prerequisites
 
