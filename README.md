@@ -6,20 +6,21 @@ If you're looking for general docs for Calico, we recommend you start [here](htt
 
 ## Prerequisites
 
-Ensure make, jq, and terraform are installed and you have a Cloud account with appropriate permissions.
+Ensure make, jq, and terraform are installed and you have a Cloud infrastructure provider account with appropriate permissions.
 
 ## Setup
 
 Deploy the Rancher management server using the [Rancher Quickstart](https://github.com/rancher/quickstart) for your infrastructure provider of choice.
 
-Deploy an RKE cluster to your infrastructure providers network.
+Deploy an RKE cluster to your infrastructure providers network.  Make sure you choose Calico as the network plugin.
 
-## Login to Calico Cloud and connect cluster with the RKE curl bash script.
+## Sign up for Calico Cloud https://www.calicocloud.io/home and join your RKE cluster.
 
-Sign up for Calico Cloud https://www.calicocloud.io/home and join your RKE cluster.
+Login to Calico Cloud and connect cluster with RKE script.
+
+Check to make sure all the components are available.
 
 ```
-curl <your script url > | bash
 kubectl get tigerastatus
 ```
 
@@ -31,14 +32,23 @@ Deploy the demo apps
 kubectl apply -R -f apps
 ```
 
+## Workshop demo
+
+Apply Calico Cloud baseline felix configuration
+
+```
+kubectl patch felixconfiguration default --type=json -p='[{"op": "remove", "path": "/spec/iptablesBackend"}]'
+kubectl apply -R -f baseline/00-felix
+```
+
+Live Demo
+
 ## Deploy Calico Cloud baseline security and observability
 
 Deploy the Calico Cloud baseline security and observability resources
 
 ```
-kubectl apply -R -f baseline
+kubectl apply -R -f baseline/
 ```
 
-## Workshop demo
-
-Live demo
+Live Demo
