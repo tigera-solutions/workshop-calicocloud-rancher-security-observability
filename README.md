@@ -45,6 +45,14 @@ Live Demo
 
 ## Deploy Calico Cloud baseline security and observability
 
+First we need to update some yaml files with the specifics of your environment.
+
+Edit `baseline/12-anomaly-detection/ad-jobs-deployment-managed.yaml` and replace the CLUSTER_NAME value with the index for your managed cluster.  You can find the string to use by running the following command.
+
+```
+kubectl describe deployment -n tigera-intrusion-detection   intrusion-detection-controller | grep ELASTIC_INDEX_SUFFIX
+```
+
 Deploy the Calico Cloud baseline security and observability resources
 
 ```

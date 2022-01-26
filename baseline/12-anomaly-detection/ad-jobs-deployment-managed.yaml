@@ -15,10 +15,10 @@ spec:
   - action: Allow
     protocol: TCP
     destination:
-      namespaceSelector: name == 'tigera-elasticsearch'
-      selector: k8s-app == 'tigera-secure-es-gateway'
+      namespaceSelector: projectcalico.org/name == 'tigera-guardian'
+      selector: k8s-app == 'tigera-guardian'
       ports:
-      - 5554
+      - 8080
   - action: Allow
     protocol: UDP
     destination:
@@ -37,21 +37,21 @@ apiVersion: projectcalico.org/v3
 kind: NetworkPolicy
 metadata:
   name: allow-tigera.elasticsearch-access-anomaly-detection
-  namespace: tigera-elasticsearch
+  namespace: tigera-guardian
 spec:
   tier: allow-tigera
   order: 1
-  selector: k8s-app == 'tigera-secure-es-gateway'
+  selector: k8s-app == 'tigera-guardian'
   types:
   - Ingress
   ingress:
   - action: Allow
     destination:
       ports:
-      - 5554
+      - 8080
     protocol: TCP
     source:
-      namespaceSelector: name == 'tigera-intrusion-detection'
+      namespaceSelector: projectcalico.org/name == 'tigera-intrusion-detection'
       selector:  app == 'anomaly-detection'
 ---
 apiVersion: apps/v1
@@ -75,7 +75,7 @@ spec:
       - name: tigera-pull-secret
       containers:
       - name: ad-jobs
-        image: quay.io/tigera/anomaly_detection_jobs:v3.11.1
+        image: quay.io/tigera/anomaly_detection_jobs:v3.11.2
         resources:
           requests:
             memory: 1G
@@ -112,18 +112,18 @@ spec:
           failureThreshold: 5
         env:
           - name: AD_DISABLED_JOBS
-            value: "bytes_out,bytes_in,process_restarts,process_bytes,dns_latency,l7_latency,http_connection_spike,http_verbs,http_response_codes,dga,generic_flows,generic_dns,generic_l7" 
-            #value: "port_scan,ip_sweep,bytes_out,bytes_in,process_restarts,process_bytes,dns_latency,l7_latency,http_connection_spike,http_verbs,http_response_codes,dga,generic_flows,generic_dns,generic_l7" 
+            value: "ip_sweep,bytes_out,bytes_in,process_restarts,process_bytes,dns_latency,l7_latency,http_connection_spike,http_verbs,http_response_codes,dga,generic_flows,generic_dns,generic_l7"
+            #value: "port_scan,ip_sweep,bytes_out,bytes_in,process_restarts,process_bytes,dns_latency,l7_latency,http_connection_spike,http_verbs,http_response_codes,dga,generic_flows,generic_dns,generic_l7"
           - name: AD_max_docs
             value: "100000"
           - name: AD_search_interval_minutes
             value: "5"
           - name: AD_NEED_API
             value: "true"
-          - name: ELASTIC_HOST
-            value: "tigera-secure-es-gateway-http.tigera-elasticsearch.svc"
           - name: CLUSTER_NAME
             value: "cluster"
+          - name: ELASTIC_HOST
+            value: "tigera-secure-es-gateway-http.tigera-elasticsearch.svc"
           - name: ELASTIC_PORT
             value: "9200"
           - name: ES_CA_CERT

@@ -4,4 +4,4 @@ kind: Tier
 metadata:
   name: platform-team
 spec:
-  order: 150
+  order: 200
