@@ -12,11 +12,11 @@ Ensure make, jq, and terraform are installed and you have a Cloud infrastructure
 
 Deploy the Rancher management server using the [Rancher Quickstart](https://github.com/rancher/quickstart) for your infrastructure provider of choice.
 
-Deploy an RKE cluster to your infrastructure providers network.  Make sure you choose Calico as the network plugin.
+Deploy a [compatible](https://docs.calicocloud.io/operations/connect/rke) RKE cluster to your infrastructure providers network.
 
-## Sign up for [Calico Cloud](https://www.calicocloud.io/home) and join your RKE cluster.
+## Sign up for Calico Cloud and connect your cluster.
 
-Login to Calico Cloud and connect cluster with RKE script.
+Login to [Calico Cloud](https://www.calicocloud.io/home) and connect your cluster.  Make sure to choose the RKE cluster type.
 
 Check to make sure all the components are available.
 
