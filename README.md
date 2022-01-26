@@ -14,7 +14,7 @@ Deploy the Rancher management server using the [Rancher Quickstart](https://gith
 
 Deploy an RKE cluster to your infrastructure providers network.  Make sure you choose Calico as the network plugin.
 
-## Sign up for Calico Cloud https://www.calicocloud.io/home and join your RKE cluster.
+## Sign up for [Calico Cloud](https://www.calicocloud.io/home) and join your RKE cluster.
 
 Login to Calico Cloud and connect cluster with RKE script.
 
